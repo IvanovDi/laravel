@@ -9,26 +9,34 @@
         {!!Form::close()!!}
         <div class="form-group">
             <table>
-                @foreach($post->comments as $item)
-                    {{--<tr ><td style="display: inline-block; border: 2px solid #000; padding: 30px;">--}}
-                            {{--{{$item->description}}--}}
-                    {{--</td></tr>--}}
+                @foreach($comments as $item)
                     <div class="panel panel-default">
                         <div class="panel-heading" style="background: #fff9f2;">
                             <div class="row">
                                 {{$item->description}}
-                                {{--<p style="margin-left: 15px; color: #2e4bad;">Author: {!! \App\User::find($comment['user_id'])->name !!}</p>--}}
                                 <div class="col-md-6" style="display: inline-block">
                                     <p>Created : {!! $item['created_at'] !!}</p>
                                 </div>
                                 <div class="col-md-6" style="display: inline-block; text-align: right;">
                                     <p>Updated : {!! $item['updated_at'] !!}</p>
                                 </div>
+                                <div class="col-md-6" style="display: inline-block; ">
+                                    @if(\Carbon\Carbon::now() < Carbon\Carbon::parse($item->created_at)->addMinutes(10))
+                                    {!! Form::open(['route' => ['editComment', $item->id], 'method' => 'get']) !!}
+                                        <textarea name="description" rows="2" class="form-control">{!! $item->description !!}</textarea>
+                                        {!! Form::submit('Edit') !!}
+                                    {!! Form::close() !!}
+                                    @endif
+                                    @if($item->edit === 1)
+                                        COMMENT EDIT!!!
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="panel-body">
                             <p>{!! $item['text'] !!}</p>
                             <div style="text-align: right">
+                                {{$item->likes()->count()}}
                                 <a href="{!! route('likeComment', $item['id']) !!}" class="btn">
                                     LIKE
                                     @if($item->likes()->find(\Auth::user()->id))
@@ -36,13 +44,13 @@
                                     @else
                                         bad
                                     @endif
-
                                 </a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </table>
+            {!!$comments->render()!!}
         </div>
     </div>
 @stop

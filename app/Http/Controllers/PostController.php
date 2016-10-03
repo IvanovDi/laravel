@@ -34,7 +34,9 @@ class PostController extends Controller
 
     public function showPost($id)
     {
-        return view('post.post', ['post' => Post::findOrFail($id)]);
+        $post = Post::findOrFail($id);
+        $comment = $post->comments()->orderBy('id', 'DESC')->paginate(2);
+        return view('post.post', ['post' => $post, 'comments' => $comment]);
     }
 
     public function addComment($id)
@@ -42,12 +44,23 @@ class PostController extends Controller
         return view('post.addComment', ['id' => $id]);
     }
 
+    public function editComment(Request $request, $id)
+    {
+
+        $comment  = Comment::find($id);
+        $comment->description = $request['description'];
+        $comment->edit = 1;
+        $comment->save();
+        return redirect('/');
+    }
+
     public function saveComment(Request $request, $id)
     {
         Comment::create([
             'description' => $request['description'],
             'user_id' => Auth::user()->id,
-            'post_id' => $id
+            'post_id' => $id,
+            'edit' => 0
         ]);
         return redirect('/');
     }
@@ -60,14 +73,9 @@ class PostController extends Controller
 
     public function likeComment($id)
     {
-
         if (\Auth::check()) {
             $comment = Comment::find($id);
-            if ($comment->likes()->find(\Auth::user()->id)) {
-                $comment->likes()->detach(\Auth::user()->id);
-            } else {
-                $comment->likes()->attach(\Auth::user()->id);
-            }
+                $comment->likes()->toggle(\Auth::user()->id);
         }
         return redirect()->back();
     }

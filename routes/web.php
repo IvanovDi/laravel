@@ -52,3 +52,8 @@ Route::get('likeComment/{id}', [
     'as' => 'likeComment',
     'uses' => 'PostController@likeComment'
 ]);
+
+Route::get('editComment/{id}', [
+    'as' => 'editComment',
+    'uses' => 'PostController@editComment'
+]);

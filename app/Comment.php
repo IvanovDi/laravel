@@ -16,13 +16,15 @@ class Comment extends Model
     protected $visible = [
         'post_id',
         'description',
-        'user_id'
+        'user_id',
+        'edit'
     ];
 
     protected $fillable = [
         'post_id',
         'description',
-        'user_id'
+        'user_id',
+        'edit'
     ];
 
     public function post()
