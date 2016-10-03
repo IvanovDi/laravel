@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Post;
 use  Illuminate\Support\Facades\Auth;
+use App\User;
+use Illuminate\Support\Facades\Mail;
 
 
 class PostController extends Controller
@@ -78,5 +80,44 @@ class PostController extends Controller
                 $comment->likes()->toggle(\Auth::user()->id);
         }
         return redirect()->back();
+    }
+
+    public function profile()
+    {
+        return view('post.profile');
+    }
+
+    public function editName(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request['name'];
+        $user->save();
+        return redirect()->back();
+    }
+
+    public function editEmail(Request $request, $id)
+    {
+        $user = User::find($id);
+        if($user->email === $request['confirmEmail']) {
+            $user->email = $request['email'];
+        }
+        $user->save();
+        return redirect()->back();
+    }
+
+    public function editPassword(Request $request, $id)
+    {
+        $user = User::find($id);
+        if($user->password === bcrypt($request['confirmPassword'])) {
+            $user->password = bcrypt($request['newPassword']);
+            $user->save();
+            Mail::raw('Текст письма', function ($message) {
+                $message->from('us@example.com', 'Laravel');
+
+                $message->to('foo@example.com')->cc('bar@example.com');
+            });
+        }
+        return redirect()->back();
+
     }
 }

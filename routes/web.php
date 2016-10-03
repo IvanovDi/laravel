@@ -57,3 +57,24 @@ Route::get('editComment/{id}', [
     'as' => 'editComment',
     'uses' => 'PostController@editComment'
 ]);
+
+Route::get('profile', [
+    'as' => 'profile',
+    'uses' => 'PostController@profile'
+]);
+
+Route::get('editName/{id}', [
+    'as' => 'editName',
+    'uses' => 'PostController@editName'
+]);
+
+Route::get('editEmail/{id}', [
+    'as' => 'editEmail',
+    'uses' => 'PostController@editEmail'
+]);
+
+Route::get('editPassword/{id}', [
+    'as' => 'editPassword',
+    'uses' => 'PostController@editPassword'
+]);
+
