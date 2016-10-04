@@ -35,12 +35,12 @@ Route::get('showPost/{id}', [
 
 Route::get('addComment/{id}', [
     'as' => 'addComment',
-    'uses' => 'PostController@addComment'
+    'uses' => 'CommentController@addComment'
 ]);
 
 Route::get('saveComment/{id}', [
     'as' => 'saveComment',
-    'uses' => 'PostController@saveComment'
+    'uses' => 'CommentController@saveComment'
 ]);
 
 Route::get('deletePost/{id}', [
@@ -50,31 +50,31 @@ Route::get('deletePost/{id}', [
 
 Route::get('likeComment/{id}', [
     'as' => 'likeComment',
-    'uses' => 'PostController@likeComment'
+    'uses' => 'CommentController@likeComment'
 ]);
 
 Route::get('editComment/{id}', [
     'as' => 'editComment',
-    'uses' => 'PostController@editComment'
+    'uses' => 'CommentController@editComment'
 ]);
 
 Route::get('profile', [
     'as' => 'profile',
-    'uses' => 'PostController@profile'
+    'uses' => 'ProfileController@profile'
 ]);
 
 Route::get('editName/{id}', [
     'as' => 'editName',
-    'uses' => 'PostController@editName'
+    'uses' => 'ProfileController@editName'
 ]);
 
 Route::get('editEmail/{id}', [
     'as' => 'editEmail',
-    'uses' => 'PostController@editEmail'
+    'uses' => 'ProfileController@editEmail'
 ]);
 
 Route::get('editPassword/{id}', [
     'as' => 'editPassword',
-    'uses' => 'PostController@editPassword'
+    'uses' => 'ProfileController@editPassword'
 ]);
 
