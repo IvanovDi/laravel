@@ -10,7 +10,7 @@ use App\Post;
 use  Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Hash;
 
 class PostController extends Controller
 {
@@ -108,7 +108,7 @@ class PostController extends Controller
     public function editPassword(Request $request, $id)
     {
         $user = User::find($id);
-        if($user->password === bcrypt($request['confirmPassword'])) {
+        if(Hash::check($request['confirmPassword'], \Auth::user()->password )) {
             $user->password = bcrypt($request['newPassword']);
             $user->save();
             Mail::raw('Текст письма', function ($message) {
