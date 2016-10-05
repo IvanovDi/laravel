@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Notifications\SendMail;
+use App\Notifications\SendMessage;
 use Illuminate\Support\Facades\Redirect;
-use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 
 
@@ -42,8 +41,8 @@ class ProfileController extends Controller
         $user = \Auth::user();
         if(Hash::check($request['confirmPassword'], \Auth::user()->password )) {
             $user->password = bcrypt($request['newPassword']);
-            $user->save();//сделать отсылку письма
-
+            $user->save();
+            $user->notify(new SendMessage());
         }
         return redirect()->back();
     }

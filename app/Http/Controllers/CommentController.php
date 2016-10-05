@@ -9,30 +9,24 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function addComment($id)
-    {
-        return view('post.addComment', ['id' => $id]);
-    }
-
     public function editComment(Request $request, $id)
     {
-
         $comment  = Comment::find($id);
         $comment->description = $request['description'];
         $comment->edit = 1;
         $comment->save();
-        return redirect('/');
+        return redirect()->back();
     }
 
-    public function saveComment(Request $request, $id)
+    public function saveComment(Request $request, $post_id)
     {
         Comment::create([
             'description' => $request->get('description'),
             'user_id' => Auth::user()->id,
-            'post_id' => $id,
+            'post_id' => $post_id,
             'edit' => 0
         ]);
-        return redirect('/');
+        return redirect()->back();
     }
 
     public function likeComment($id)

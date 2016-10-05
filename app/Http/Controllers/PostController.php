@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Post;
 use  Illuminate\Support\Facades\Auth;
-use App\User;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
 
 class PostController extends Controller
 {
@@ -21,10 +17,9 @@ class PostController extends Controller
 
     public function save(Request $request)
     {
-//        $this->validate($request, [
-//            'title' => 'required|unique:posts|max:255',
-//            'content' => 'required',
-//        ]);
+        $img = $request->image;
+//        copy($img, '/public/picture');
+        dd($img);
         Post::create([
             'user_id' => Auth::user()->id,
             'title' => $request['title'],

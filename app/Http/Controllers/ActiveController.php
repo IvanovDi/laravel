@@ -16,8 +16,7 @@ class ActiveController extends Controller
     public function activate(Request $request)
     {
         $user = User::where('token', $request->query('token'))->firstOrFail();
-//        dd(Carbon::now(), Carbon::parse($user->token_time)->addMinutes(1));
-        if(Carbon::now() <  Carbon::parse($user->token_time)->addMinutes(1)) {
+        if(Carbon::now() <  Carbon::parse($user->token_time)->addMinutes(10)) {
             $user->status = true;
             $user->save();
         } else {

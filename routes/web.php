@@ -25,7 +25,7 @@ Route::get('create', [
     'uses' => 'PostController@create'
 ]);
 
-Route::get('save', [
+Route::post('save', [
     'as' => 'save',
     'uses' => 'PostController@save'
 ]);
@@ -33,11 +33,6 @@ Route::get('save', [
 Route::get('showPost/{id}', [
     'as' => 'showPost',
     'uses' => 'PostController@showPost'
-]);
-
-Route::get('addComment/{id}', [
-    'as' => 'addComment',
-    'uses' => 'CommentController@addComment'
 ]);
 
 Route::get('saveComment/{id}', [
@@ -65,33 +60,33 @@ Route::get('profile', [
     'uses' => 'ProfileController@profile'
 ]);
 
-Route::get('editName', [
+Route::post('editName', [
     'as' => 'editName',
     'uses' => 'ProfileController@editName'
 ]);
 
-Route::get('editEmail', [
+Route::post('editEmail', [
     'as' => 'editEmail',
     'uses' => 'ProfileController@editEmail'
 ]);
 
-Route::get('editPassword', [
+Route::post('editPassword', [
     'as' => 'editPassword',
     'uses' => 'ProfileController@editPassword'
 ]);
 
 });
 
-Route::get('comparison' ,[
+Route::post('comparison' ,[
     'as' => 'comparison',
     'uses' => 'ActiveController@activate']);
 
-Route::get('noactive', [
+Route::post('noactive', [
     'as' => 'noactive',
     'uses' => 'ActiveController@noactive'
 ]);
 
-Route::get('reship', [
+Route::post('reship', [
     'as' => 'reship',
     'uses' => 'ActiveController@reship'
 ]);

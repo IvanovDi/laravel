@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
     <h1>Создание Поста</h1>
-    {!! Form::open(['route' => 'save', 'method' => 'GET']) !!}
+    {!! Form::open(['route' => 'save', 'method' => 'post', 'enctype' => '"multipart/form-data']) !!}
     <div class="form-group">
         {!! Form::label('Title') !!}
         {!! Form::text('title', null,
@@ -18,6 +18,12 @@
                   'class'=>'form-control',
                   'placeholder'=>'Article text']) !!}
     </div>
+
+    <div class="form-group">
+        {!! Form::label('Image') !!}
+        {!! Form::file('image')!!}
+    </div>
+
     <div class="form-group" style="display: inline-block;margin-left: 10px;">
         {!! Form::submit('Save',
           ['class'=>'btn btn-primary']) !!}

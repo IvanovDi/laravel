@@ -2,21 +2,21 @@
 @section('content')
     <h1>Profile</h1>
     <div class="form-group">
-        {!! Form::open(['route' => ['editName', \Auth::user()->id], 'method' => 'get', 'class' => 'form']) !!}
+        {!! Form::open(['route' => ['editName', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
             {!! Form::label('New Name') !!}<br>
             {!! Form::text('name') !!}<br>
             {!! Form::submit('Edit Name') !!}
         {!! Form::close() !!}
     </div>
     <div class="form-group">
-        {!! Form::open(['route' => ['editEmail', \Auth::user()->id], 'method' => 'get', 'class' => 'form']) !!}
+        {!! Form::open(['route' => ['editEmail', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
         {!! Form::label('New Email') !!}<br>
         {!! Form::text('email') !!}<br>
         {!! Form::submit('Edit Email') !!}
         {!! Form::close() !!}
     </div>
     <div class="form-group">
-        {!! Form::open(['route' => ['editPassword', \Auth::user()->id], 'method' => 'get', 'class' => 'form']) !!}
+        {!! Form::open(['route' => ['editPassword', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
         {!! Form::label('New Password') !!}<br>
         {!! Form::password('newPassword') !!}<br>
         {!! Form::label('Old Password') !!}<br>

@@ -4,10 +4,13 @@
         <h1>{{$post->title}}</h1>
         <p>{{$post->description}}</p>
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
-        {!! Form::open(['route' => ['addComment', $post->id], 'method' => 'get']) !!}
-            {!! Form::submit('Add Comment') !!}
-        {!!Form::close()!!}
         <div class="form-group">
+            <div class="panel-heading" >
+            {!! Form::open(['route' => ['saveComment', $post->id], 'method' => 'get']) !!}
+            <textarea name="description" rows="2" class="form-control"></textarea>
+            {!! Form::submit('Add Comment') !!}
+            {!!Form::close()!!}
+            </div>
             <table>
                 @foreach($comments as $item)
                     <div class="panel panel-default">
