@@ -12,8 +12,6 @@
         {!! Form::open(['route' => ['editEmail', \Auth::user()->id], 'method' => 'get', 'class' => 'form']) !!}
         {!! Form::label('New Email') !!}<br>
         {!! Form::text('email') !!}<br>
-        {!! Form::label('Old Email') !!}<br>
-        {!! Form::text('confirmEmail') !!}<br>
         {!! Form::submit('Edit Email') !!}
         {!! Form::close() !!}
     </div>
@@ -26,4 +24,9 @@
         {!! Form::submit('Edit Password') !!}
         {!! Form::close() !!}
     </div>
+
+
+    @if(Session::has('message'))
+        {!!Session::get('message')!!}
+    @endif
 @stop

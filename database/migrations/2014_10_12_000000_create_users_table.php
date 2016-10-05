@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('status')->default(false);
+            $table->timestamp('token_time');
+            $table->string('token', 32);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -26,7 +29,7 @@ class CreateUsersTable extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return void`
      */
     public function down()
     {

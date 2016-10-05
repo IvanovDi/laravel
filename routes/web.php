@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +14,9 @@
 //    return view('welcome');
 //});
 Auth::routes();
+
+Route::group(['middleware' => ['auth', 'active.user']], function()
+{
 
 Route::get('/', 'HomeController@index');
 
@@ -63,18 +65,36 @@ Route::get('profile', [
     'uses' => 'ProfileController@profile'
 ]);
 
-Route::get('editName/{id}', [
+Route::get('editName', [
     'as' => 'editName',
     'uses' => 'ProfileController@editName'
 ]);
 
-Route::get('editEmail/{id}', [
+Route::get('editEmail', [
     'as' => 'editEmail',
     'uses' => 'ProfileController@editEmail'
 ]);
 
-Route::get('editPassword/{id}', [
+Route::get('editPassword', [
     'as' => 'editPassword',
     'uses' => 'ProfileController@editPassword'
 ]);
+
+});
+
+Route::get('comparison' ,[
+    'as' => 'comparison',
+    'uses' => 'ActiveController@activate']);
+
+Route::get('noactive', [
+    'as' => 'noactive',
+    'uses' => 'ActiveController@noactive'
+]);
+
+Route::get('reship', [
+    'as' => 'reship',
+    'uses' => 'ActiveController@reship'
+]);
+
+
 

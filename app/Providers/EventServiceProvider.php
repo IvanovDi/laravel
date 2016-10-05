@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Notifications\SendMail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -13,8 +15,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        'App\Events\SendMail' => [
+            'App\Listeners\EventSendMail',
         ],
     ];
 
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Event::listen('event.SendMail', function ($user) {
+            $url = route('comparison', ['token' => $user->token]);
+            $user->notify(new SendMail($url));
+        });
     }
 }

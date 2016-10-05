@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Traits\RegisterUserExtend;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -19,8 +20,9 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+    use RegisterUserExtend;
 
-    use RegistersUsers;
+    protected $token;
 
     /**
      * Where to redirect users after login / registration.
@@ -62,10 +64,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $this->token = str_random(32);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'token' => $this->token
         ]);
     }
 }

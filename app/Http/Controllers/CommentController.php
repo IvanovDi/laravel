@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Post;
+use App\Comment;
 use  Illuminate\Support\Facades\Auth;
-use App\User;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -30,7 +27,7 @@ class CommentController extends Controller
     public function saveComment(Request $request, $id)
     {
         Comment::create([
-            'description' => $request['description'],
+            'description' => $request->get('description'),
             'user_id' => Auth::user()->id,
             'post_id' => $id,
             'edit' => 0
