@@ -77,7 +77,7 @@ Route::post('editPassword', [
 
 });
 
-Route::post('comparison' ,[
+Route::get('comparison' ,[
     'as' => 'comparison',
     'uses' => 'ActiveController@activate']);
 

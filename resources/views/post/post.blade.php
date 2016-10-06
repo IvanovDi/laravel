@@ -2,6 +2,7 @@
 @section('content')
     <div class="article">
         <h1>{{$post->title}}</h1>
+        <img src="{!! '../images/' . $post->image !!}" alt="picture">
         <p>{{$post->description}}</p>
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
         <div class="form-group">

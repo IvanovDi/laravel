@@ -6,7 +6,8 @@ use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Post;
-use  Illuminate\Support\Facades\Auth;
+use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -17,13 +18,20 @@ class PostController extends Controller
 
     public function save(Request $request)
     {
-        $img = $request->image;
-//        copy($img, '/public/picture');
-        dd($img);
+        $path = 'def_img.jpg';
+        if($request->image) {
+            Storage::disk('images')->put(
+                $request->file('image')->getClientOriginalName(),
+                file_get_contents($request->file('image')->getRealPath())
+            );
+            $path = $request->file('image')->getClientOriginalName();
+        }
+
         Post::create([
             'user_id' => Auth::user()->id,
-            'title' => $request['title'],
-            'description' => $request['description']
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'image' => $path
         ]);
 
         return redirect('/');

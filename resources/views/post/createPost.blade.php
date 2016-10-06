@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
     <h1>Создание Поста</h1>
-    {!! Form::open(['route' => 'save', 'method' => 'post', 'enctype' => '"multipart/form-data']) !!}
+    {!! Form::open(['route' => 'save', 'method' => 'post', 'files' => true]) !!}
     <div class="form-group">
         {!! Form::label('Title') !!}
         {!! Form::text('title', null,
@@ -20,8 +20,8 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('Image') !!}
-        {!! Form::file('image')!!}
+        {!! Form::label('image','Image') !!}
+        {!! Form::file('image', null)!!}
     </div>
 
     <div class="form-group" style="display: inline-block;margin-left: 10px;">
