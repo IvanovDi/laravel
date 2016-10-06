@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Notifications\SendMail;
 use App\Notifications\SendMessage;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 
@@ -36,7 +36,7 @@ class ProfileController extends Controller
         return Redirect::back()->with('message','please confirm your email');
     }
 
-    public function editPassword(Request $request)
+    public function editPassword(Requests\ConfirmPasswordRequest $request)
     {
         $user = \Auth::user();
         if(Hash::check($request['confirmPassword'], \Auth::user()->password )) {

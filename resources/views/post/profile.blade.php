@@ -24,9 +24,8 @@
         {!! Form::submit('Edit Password') !!}
         {!! Form::close() !!}
     </div>
-
-
-    @if(Session::has('message'))
-        {!!Session::get('message')!!}
-    @endif
+    <?php foreach ($errors->all() as $error) {
+        echo $error . '<br>';
+    }
+     ?>
 @stop

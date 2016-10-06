@@ -114,4 +114,6 @@ return [
 
     'attributes' => [],
 
+    'confirm_password' => 'The :attribute PASSWORD NO CONFIRM.'
+
 ];

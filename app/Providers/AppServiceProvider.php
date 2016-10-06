@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Hash;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 
     /**
