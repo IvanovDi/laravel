@@ -21,37 +21,37 @@ Route::group(['middleware' => ['auth', 'active.user']], function()
 Route::get('/', 'HomeController@index');
 
 Route::get('create', [
-    'as' => 'create',
+    'as' => 'post.create',
     'uses' => 'PostController@create'
 ]);
 
 Route::post('save', [
-    'as' => 'save',
+    'as' => 'post.save',
     'uses' => 'PostController@save'
 ]);
 
 Route::get('showPost/{id}', [
-    'as' => 'showPost',
+    'as' => 'post.show',
     'uses' => 'PostController@showPost'
 ]);
 
 Route::get('saveComment/{id}', [
-    'as' => 'saveComment',
+    'as' => 'comment.save',
     'uses' => 'CommentController@saveComment'
 ]);
 
 Route::get('deletePost/{id}', [
-    'as' => 'deletePost',
+    'as' => 'post.delete',
     'uses' => 'PostController@deletePost'
 ]);
 
 Route::get('likeComment/{id}', [
-    'as' => 'likeComment',
+    'as' => 'comment.like',
     'uses' => 'CommentController@likeComment'
 ]);
 
 Route::get('editComment/{id}', [
-    'as' => 'editComment',
+    'as' => 'comment.edit',
     'uses' => 'CommentController@editComment'
 ]);
 
@@ -61,17 +61,17 @@ Route::get('profile', [
 ]);
 
 Route::post('editName', [
-    'as' => 'editName',
+    'as' => 'profile.editName',
     'uses' => 'ProfileController@editName'
 ]);
 
 Route::post('editEmail', [
-    'as' => 'editEmail',
+    'as' => 'profile.editEmail',
     'uses' => 'ProfileController@editEmail'
 ]);
 
 Route::post('editPassword', [
-    'as' => 'editPassword',
+    'as' => 'profile.editPassword',
     'uses' => 'ProfileController@editPassword'
 ]);
 

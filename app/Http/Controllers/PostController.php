@@ -59,17 +59,6 @@ class PostController extends Controller
         return view('post.addComment', ['id' => $id]);
     }
 
-    public function editComment(Request $request, $id)
-    {
-
-        $comment  = Comment::find($id);
-        $comment->description = $request['description'];
-        $comment->edit = 1;
-        $comment->save();
-        return redirect('/');
-    }
-
-
     public function deletePost($id)
     {
         Post::destroy($id);
