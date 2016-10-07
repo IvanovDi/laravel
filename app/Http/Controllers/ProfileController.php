@@ -48,7 +48,7 @@ class ProfileController extends Controller
         return Redirect::back()->with('message','please confirm your email');
     }
 
-    public function editPassword(Requests\ConfirmPasswordRequest $request)
+    public function editPassword(Requests $request)
     {
         $this->validator($request->all())->validate();
         $user = \Auth::user();
