@@ -8,9 +8,18 @@ use App\Http\Requests;
 use App\Post;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+    }
+
     public function create()
     {
         return view('post.createPost');
@@ -18,6 +27,7 @@ class PostController extends Controller
 
     public function save(Request $request)
     {
+        $this->validator($request->all())->validate();
         $path = 'def_img.jpg';
         if($request->image) {
             Storage::disk('images')->put(

@@ -11,6 +11,7 @@
             <textarea name="description" rows="2" class="form-control"></textarea>
             {!! Form::submit('Add Comment') !!}
             {!!Form::close()!!}
+                <p style="color: red">{!! $errors->first('description') !!}</p>
             </div>
             <table>
                 @foreach($comments as $item)

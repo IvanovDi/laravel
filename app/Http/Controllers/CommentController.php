@@ -6,9 +6,16 @@ use App\Http\Requests;
 use App\Comment;
 use  Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'description' => 'required'
+        ]);
+    }
     public function editComment(Request $request, $id)
     {
         $comment  = Comment::find($id);
@@ -20,6 +27,7 @@ class CommentController extends Controller
 
     public function saveComment(Request $request, $post_id)
     {
+        $this->validator($request->all())->validate();
         Comment::create([
             'description' => $request->get('description'),
             'user_id' => Auth::user()->id,
