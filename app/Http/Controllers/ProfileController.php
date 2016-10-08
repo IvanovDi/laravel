@@ -20,7 +20,7 @@ class ProfileController extends Controller
             'name' => 'required'
         ]);
         $user = \Auth::user();
-        $user->name = $request['name'];
+        $user->name = $request->get('name');
         $user->save();
         return redirect()->back();
     }
@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $user = \Auth::user();
         $url = route('comparison', ['token' => $user->token]);
         $user->notify(new SendMail($url));
-        $user->email = $request['email'];
+        $user->email = $request->get('email');
         $user->status = false;
         $user->save();
         return Redirect::back()->with('message','please confirm your email');
@@ -46,8 +46,8 @@ class ProfileController extends Controller
             'newPassword' => 'required|min:6'
         ]);
         $user = \Auth::user();
-        if(Hash::check($request['confirmPassword'], \Auth::user()->password )) {
-            $user->password = bcrypt($request['newPassword']);
+        if(Hash::check($request->get('confirmPassword'), \Auth::user()->password )) {
+            $user->password = bcrypt($request->get('newPassword'));
             $user->save();
             $user->notify(new SendMessage());
         }

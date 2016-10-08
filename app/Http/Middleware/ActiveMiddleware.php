@@ -16,7 +16,7 @@ class ActiveMiddleware
     public function handle($request, Closure $next)
     {
         if(\Auth::user()->status == false) {
-           return redirect('noactive');
+           return redirect()->route('noactive');
         }
         return $next($request);
     }

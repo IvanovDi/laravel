@@ -19,7 +19,7 @@ class CommentController extends Controller
     public function editComment(Request $request, $id)
     {
         $comment  = Comment::find($id);
-        $comment->description = $request['description'];
+        $comment->description = $request->get('description');
         $comment->edit = 1;
         $comment->save();
         return redirect()->back();
