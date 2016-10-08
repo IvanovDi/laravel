@@ -8,7 +8,6 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendMail;
 use Illuminate\Support\Facades\Redirect;
-
 use App\Http\Requests;
 
 class ActiveController extends Controller

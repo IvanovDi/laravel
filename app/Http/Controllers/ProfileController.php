@@ -30,7 +30,6 @@ class ProfileController extends Controller
         $this->validate($request, [
             'email' => 'required|email|unique:users'
         ]);
-        $this->validator($request->all())->validate();
         $user = \Auth::user();
         $url = route('comparison', ['token' => $user->token]);
         $user->notify(new SendMail($url));
@@ -46,7 +45,6 @@ class ProfileController extends Controller
             'confirmPassword' => 'required|min:6',
             'newPassword' => 'required|min:6'
         ]);
-        $this->validator($request->all())->validate();
         $user = \Auth::user();
         if(Hash::check($request['confirmPassword'], \Auth::user()->password )) {
             $user->password = bcrypt($request['newPassword']);

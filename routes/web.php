@@ -10,9 +10,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 Auth::routes();
 
 Route::group(['middleware' => ['auth', 'active.user']], function()
@@ -81,7 +78,7 @@ Route::get('comparison' ,[
     'as' => 'comparison',
     'uses' => 'ActiveController@activate']);
 
-Route::post('noactive', [
+Route::get('noactive', [
     'as' => 'noactive',
     'uses' => 'ActiveController@noactive'
 ]);

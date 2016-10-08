@@ -13,10 +13,6 @@
                           ['class'=>'btn btn-danger']) !!}
                         {!! Form::close() !!}
                         amount comment -  {!! $item->comments->count()!!}
-                        {{--{!! Form::open(['route' => ['post.edit', $post['id']], 'class' => 'form', 'method'=> 'get']) !!}--}}
-                        {{--{!! Form::submit('Edit',--}}
-                          {{--['class'=>'btn btn-default']) !!}--}}
-                        {{--{!! Form::close() !!}                    --}}
                 @endif
             @endif
         @endforeach
