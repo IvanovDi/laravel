@@ -11,9 +11,9 @@ class Comment extends Model
     use SoftDeletes;
     use FormAccessible;
 
-    protected $dates = ['deleted_at'];  //todo
+    protected $dates = ['deleted_at'];
 
-    protected $visible = [      //todo Если нигде не используешь toArray, json нет необходимости это прописывать
+    protected $visible = [
         'post_id',
         'description',
         'user_id',

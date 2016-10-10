@@ -3,7 +3,7 @@
     <h1>Profile</h1>
     <div class="form-group">
         {!! Form::open(['route' => ['profile.editName', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
-            {!! Form::label('New Name') !!}<br> {{--todo название лейбла должно соответствовать названию поля. Если хочешь его изменить, напиши через запятую то, что должно выводиться --}}
+            {!! Form::label('name', 'New Name') !!}<br>
             {!! Form::text('name', \Auth::user()->name) !!}<br>
             {!! Form::submit('Edit Name') !!}
         {!! Form::close() !!}
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         {!! Form::open(['route' => ['profile.editEmail', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
-        {!! Form::label('New Email') !!}<br>    {{--todo label--}}
+        {!! Form::label('email', 'New Email') !!}<br>
         {!! Form::text('email', \Auth::user()->email) !!}<br>
         {!! Form::submit('Edit Email') !!}
         {!! Form::close() !!}
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         {!! Form::open(['route' => ['profile.editPassword', \Auth::user()->id], 'method' => 'post', 'class' => 'form']) !!}
-        {!! Form::label('New Password') !!}<br> {{--todo label--}}
+        {!! Form::label('newPassword', 'New Password') !!}<br>
         {!! Form::password('newPassword') !!}<br>
         <p style="color: red">{{$errors->first('newPassword')}}</p>
         {!! Form::label('Old Password') !!}<br>

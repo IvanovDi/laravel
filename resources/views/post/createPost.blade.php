@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('text', 'Description') !!}  {{--todo Название лейбла должно соответствовать имени поля--}}
+        {!! Form::label('text', 'Description') !!}
         {!! Form::textarea('text', null,
             ['required',
                   'name ' => 'description',

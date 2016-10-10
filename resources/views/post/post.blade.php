@@ -41,10 +41,10 @@
                         <div class="panel-body">
                             <p>{!! $item['text'] !!}</p>
                             <div style="text-align: right">
-                                {{$item->likes()->count()}} {{--todo запрос должен проходить в контроллере, здесь просто нужно вывести полученную информацию--}}
+                                {{$item->likes_count}}
                                 <a href="{!! route('comment.like', $item['id']) !!}" class="btn">
                                     LIKE
-                                    @if($item->likes()->find(\Auth::user()->id))    {{--todo нельзя отправлять запрос с вьюхи --}}
+                                    @if($item->likes->find(\Auth::user()->id))    {{--todo нельзя отправлять запрос с вьюхи --}}
                                         good
                                     @else
                                         bad

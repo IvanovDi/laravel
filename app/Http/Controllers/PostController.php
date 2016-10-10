@@ -59,7 +59,8 @@ class PostController extends Controller
     public function showPost($id)
     {
         $post = $this->postRepository->find($id);
-        $comment = $post->comments()->orderBy('created_at', 'DESC')->paginate(2);
+        $comment = $post->comments()->withCount('likes')->orderBy('created_at', 'DESC')->with('likes')->paginate(2);
+//        dd($comment);
         return view('post.post', ['post' => $post, 'comments' => $comment]);
     }
 

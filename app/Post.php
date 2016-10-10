@@ -11,9 +11,9 @@ class Post extends Model
     use SoftDeletes;
     use FormAccessible;
 
-    protected $dates = ['deleted_at'];  //todo
+    protected $dates = ['deleted_at'];
 
-    protected $visible = [  //todo
+    protected $visible = [
         'user_id',
         'title',
         'description',
