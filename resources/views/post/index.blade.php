@@ -6,13 +6,13 @@
     <div class="article">
         @foreach($post as $item)
             <h2><a href="{{route('post.show', $item->id)}}">{{$item ->title}}</a> </h2> {{"created - $item->created_at , updated -  $item->updated_at"}}
-            @if (\Auth::user())
+            @if (\Auth::user()) {{--todo лишняя проверка. Middleware не даст сюда зайти--}}
                 @if (\Auth::user()->id === $item['user_id'])
                         {!! Form::open(['route' => ['post.delete', $item->id], 'class' => 'form', 'method' => 'get']) !!}
                         {!! Form::submit('Delete Post',
                           ['class'=>'btn btn-danger']) !!}
                         {!! Form::close() !!}
-                        amount comment -  {!! $item->comments->count()!!}
+                        amount comment -  {!! $item->comments_count !!}
                 @endif
             @endif
         @endforeach

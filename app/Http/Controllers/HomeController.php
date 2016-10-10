@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Contracts\Pagination;
 use Illuminate\Auth;
 use App\Post;
@@ -25,7 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $post = Post::orderBy('id', 'DESC')->paginate(2);
-        return view('post.index', ['post' => $post]);
+        
     }
 }

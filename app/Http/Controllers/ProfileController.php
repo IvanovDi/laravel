@@ -32,8 +32,10 @@ class ProfileController extends Controller
         ]);
         $user = \Auth::user();
         $url = route('comparison', ['token' => $user->token]);
-        $user->notify(new SendMail($url));
+        // а потом имейл редактируется в базе. Запрос на подтверждение почты должен высылаться на новую почту, которую
+        // указал пользователь
         $user->email = $request->get('email');
+        $user->notify(new SendMail($url));
         $user->status = false;
         $user->save();
         return Redirect::back()->with('message','please confirm your email');

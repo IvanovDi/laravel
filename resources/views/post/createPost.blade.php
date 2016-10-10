@@ -3,7 +3,7 @@
     <h1>Создание Поста</h1>
     {!! Form::open(['route' => 'post.save', 'method' => 'post', 'files' => true]) !!}
     <div class="form-group">
-        {!! Form::label('Title') !!}
+        {!! Form::label('title') !!}
         {!! Form::text('title', null,
             ['required',
                   'class'=>'form-control',
@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('Description') !!}
+        {!! Form::label('text', 'Description') !!}  {{--todo Название лейбла должно соответствовать имени поля--}}
         {!! Form::textarea('text', null,
             ['required',
                   'name ' => 'description',

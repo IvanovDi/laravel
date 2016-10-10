@@ -15,11 +15,11 @@ Auth::routes();
 Route::group(['middleware' => ['auth', 'active.user']], function()
 {
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'PostController@index');
 
 Route::get('create', [
     'as' => 'post.create',
-    'uses' => 'PostController@create'
+    'uses' => 'PostController@create'   //todo переписать Post route на resource
 ]);
 
 Route::post('save', [

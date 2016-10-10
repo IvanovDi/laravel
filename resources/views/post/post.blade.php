@@ -7,10 +7,10 @@
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
         <div class="form-group">
             <div class="panel-heading" >
-            {!! Form::open(['route' => ['comment.save', $post->id], 'method' => 'get']) !!}
-            <textarea name="description" rows="2" class="form-control"></textarea>
-            {!! Form::submit('Add Comment') !!}
-            {!!Form::close()!!}
+                {!! Form::open(['route' => ['comment.save', $post->id], 'method' => 'get']) !!}
+                    <textarea name="description" rows="2" class="form-control"></textarea>
+                    {!! Form::submit('Add Comment') !!}
+                {!!Form::close()!!}
                 <p style="color: red">{!! $errors->first('description') !!}</p>
             </div>
             <table>
@@ -41,10 +41,10 @@
                         <div class="panel-body">
                             <p>{!! $item['text'] !!}</p>
                             <div style="text-align: right">
-                                {{$item->likes()->count()}}
+                                {{$item->likes()->count()}} {{--todo запрос должен проходить в контроллере, здесь просто нужно вывести полученную информацию--}}
                                 <a href="{!! route('comment.like', $item['id']) !!}" class="btn">
                                     LIKE
-                                    @if($item->likes()->find(\Auth::user()->id))
+                                    @if($item->likes()->find(\Auth::user()->id))    {{--todo нельзя отправлять запрос с вьюхи --}}
                                         good
                                     @else
                                         bad
