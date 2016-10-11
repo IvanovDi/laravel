@@ -18,9 +18,11 @@ class SendMail extends Notification
      */
 
     public $url;
-    public function __construct($url)
+    protected $token;
+    public function __construct($token)
     {
-        $this->url = $url;
+        $this->token = $token;
+        $this->url = route('comparison', ['token' => $this->token]);;
     }
 
     /**
@@ -46,18 +48,5 @@ class SendMail extends Notification
                     ->line('hello this is confirm notification.')
                     ->action('Notification Action', $this->url)
                     ->line('Thank you for using our application!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
     }
 }

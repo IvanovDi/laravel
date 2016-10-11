@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Traits\RegisterUserExtend;
+use App\Traits\TokenMake;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -20,7 +20,8 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-    use RegisterUserExtend;
+    use RegistersUsers;
+    use TokenMake;
 
     protected $token;
 
@@ -64,12 +65,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $this->token = str_random(32);
-        return User::create([
+        $this->token = $this->makeToken();
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'token' => $this->token
         ]);
+        $user->notify(new SendMail($this->token));
+
+        return $user;
     }
 }

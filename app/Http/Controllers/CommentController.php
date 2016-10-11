@@ -2,28 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Comment;
 use  Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Repositories\CommentRepository as CommentRepo;
+use App\Repositories\CommentRepository;
 
 class CommentController extends Controller
 {
     private $commentRepository;
 
-    public function __construct(CommentRepo $comment)
+    public function __construct(CommentRepository $comment)
     {
         $this->commentRepository = $comment;
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'description' => 'required'
-        ]);
-    }
     public function editComment(Request $request, $id)  //todo переименовать на update. Сделать проверку на время
     {
         $comment  = $this->commentRepository->find($id);
@@ -35,7 +28,9 @@ class CommentController extends Controller
 
     public function saveComment(Request $request, $post_id) //todo переименовать на store
     {
-        $this->validator($request->all())->validate();
+        $this->validate($request, [
+            'description' => 'required'
+        ]);
         Comment::create([
             'description' => $request->get('description'),
             'user_id' => Auth::user()->id,

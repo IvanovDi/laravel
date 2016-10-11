@@ -12,21 +12,23 @@
 
     <div class="form-group">
         {!! Form::label('text', 'Description') !!}
-        {!! Form::textarea('text', null,
-            ['required',
-                  'name ' => 'description',
-                  'class'=>'form-control',
-                  'placeholder'=>'Article text']) !!}
+        {!! Form::textarea('text', null, [
+            'required',
+            'name' => 'description',
+            'class' => 'form-control',
+            'placeholder' => 'Article text'
+        ]) !!}
     </div>
 
     <div class="form-group">
-        {!! Form::label('image','Image') !!}
+        {!! Form::label('image', 'Image') !!}
         {!! Form::file('image', null)!!}
     </div>
 
     <div class="form-group" style="display: inline-block;margin-left: 10px;">
-        {!! Form::submit('Save',
-          ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Save', [
+            'class' => 'btn btn-primary'
+        ]) !!}
     </div>
     {!! form::close() !!}
 

@@ -14,6 +14,8 @@ class CreateCommentUserTable extends Migration
     public function up()
     {
         Schema::create('comment_user', function (Blueprint $table) {
+//            $table->primary(['user_id', 'comment_id']);
+//            $table->unique(['user_id', 'comment_id']);
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('comment_id');

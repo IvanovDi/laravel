@@ -31,14 +31,11 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users'
         ]);
         $user = \Auth::user();
-        $url = route('comparison', ['token' => $user->token]);
-        // а потом имейл редактируется в базе. Запрос на подтверждение почты должен высылаться на новую почту, которую
-        // указал пользователь
         $user->email = $request->get('email');
-        $user->notify(new SendMail($url));
+        $user->notify(new SendMail($user->token));
         $user->status = false;
         $user->save();
-        return Redirect::back()->with('message','please confirm your email');
+        return redirect()->back()->with('message','please confirm your email');
     }
 
     public function editPassword(Request $request)

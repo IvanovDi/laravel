@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\TokenMake;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\User;
@@ -12,10 +13,11 @@ use App\Http\Requests;
 
 class ActiveController extends Controller
 {
+    use TokenMake;
     public function activate(Request $request)
     {
         $user = User::where('token', $request->query('token'))->firstOrFail();
-        if(Carbon::now() <  Carbon::parse($user->token_time)->addMinutes(10)) {
+        if (Carbon::now() < Carbon::parse($user->token_time)->addMinutes(10)) {
             $user->status = true;
             $user->save();
         } else {
@@ -32,12 +34,11 @@ class ActiveController extends Controller
     public function reship()
     {
         $user = Auth::user();
-        $token = str_random(32);
+        $token = $this->makeToken();
         $user->token = $token;
         $user->token_time = Carbon::now();
         $user->save();
-        $url = route('comparison', ['token' => $user->token]);
-        $user->notify(new SendMail($url));
+        $user->notify(new SendMail($token));
         return Redirect::back();
     }
 }
