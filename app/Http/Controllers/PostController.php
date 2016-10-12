@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Components\Like;
+use App\Components\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\PostRepository;
@@ -25,7 +26,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $post = $this->postRepository->pushCriteria(new OrderCommentBy())->paginate(3);
+        $post = $this->postRepository->pushCriteria(new  OrderCommentBy())->paginate(3);
 
         return view('post.index', ['post' => $post]);
 
@@ -58,23 +59,17 @@ class PostController extends Controller
 
     public function showPost($id)
     {
-//        dd(new  Like());
+        Message::setSuccess('hello world');
+        $like = new  Like();
         $post = $this->postRepository->find($id);
         $comment = $post->comments()->withCount('likes')->orderBy('created_at', 'DESC')->with('likes')->paginate(2);
-        return view('post.post', ['post' => $post, 'comments' => $comment]);
+        return view('post.post', ['post' => $post, 'comments' => $comment, 'like' => $like]);
     }
 
     public function deletePost($id)
     {
         $this->postRepository->delete($id);
         return redirect('/');
-    }
-
-    public function likeComment($id)
-    {
-        $comment = $this->commentRepository->find($id);
-        $comment->likes()->toggle(\Auth::user()->id);
-        return redirect()->back();
     }
 
 

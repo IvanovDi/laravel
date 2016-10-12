@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Components\Like;
 use  Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -42,8 +43,11 @@ class CommentController extends Controller
 
     public function likeComment($id)
     {
-        $comment = Comment::find($id);
+        $like = new Like();
+        $like->deleteCache($id);
+        $comment = $this->commentRepository->find($id);
         $comment->likes()->toggle(\Auth::user()->id);
         return redirect()->back();
     }
+
 }

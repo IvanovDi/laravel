@@ -33,7 +33,7 @@
                                     {!! Form::close() !!}
                                     @endif
                                     @if($item->edit === 1)
-                                        COMMENT EDIT!!!
+                                        COMMENT EDITED!!!
                                     @endif
                                 </div>
                             </div>
@@ -41,10 +41,10 @@
                         <div class="panel-body">
                             <p>{!! $item['text'] !!}</p>
                             <div style="text-align: right">
-                                {{$item->likes_count}}
+                                {{$like->get('comment_' . $item->id)}}
                                 <a href="{!! route('comment.like', $item['id']) !!}" class="btn">
                                     LIKE
-                                    @if($item->likes->find(\Auth::user()->id))    {{--todo нельзя отправлять запрос с вьюхи --}}
+                                    @if($item->likes->find(\Auth::user()->id))
                                         good
                                     @else
                                         bad
