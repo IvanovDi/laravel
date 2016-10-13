@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
     <h1>Создание Поста</h1>
-    {!! Form::open(['route' => 'post.save', 'method' => 'post', 'files' => true]) !!}
+    {!! Form::open(['route' => 'post.store', 'method' => 'post', 'files' => true]) !!}
     <div class="form-group">
         {!! Form::label('title') !!}
         {!! Form::text('title', null,

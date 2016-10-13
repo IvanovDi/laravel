@@ -8,37 +8,49 @@ class Message
     const ERROR = 'error';
     const WARNING = 'warning';
     const SUCCESS = 'success';
+    protected $prefix  = 'mess_';
+    protected $message  = '';
 
-    public static function setError($text)
+    public function setError($text)
     {
-       return self::setMessage(self::ERROR, $text);
+       return $this->setMessage(self::ERROR, $text);
     }
 
-    public static function setInfo($text)
+    public function setInfo($text)
     {
-        return self::setMessage(self::INFO, $text);
+        return $this->setMessage(self::INFO, $text);
     }
 
-    public static function setWarning($text)
+    public function setWarning($text)
     {
-        return self::setMessage(self::WARNING, $text);
+        return $this->setMessage(self::WARNING, $text);
     }
 
-    public static function setSuccess($text)
+    public function setSuccess($text)
     {
-        return self::setMessage(self::SUCCESS, $text);
+        return $this->setMessage(self::SUCCESS, $text);
     }
 
-    public static function setMessage($key, $value)
+    protected function setMessage($key, $value)
     {
-        session()->flash('mess_' .  $key , $value);
+        session()->flash($this->prefix .  $key , $value);
     }
 
-    public  static function hasMessage($type)
+    public function hasMessage()
     {
-        if(session()->has('mess_' . $type)) {
-            return session()->get('mess_' . $type);
+        if(session()->has($this->prefix . self::SUCCESS)) {
+            $this->message .= ' SUCCESS - ' . session()->get($this->prefix . self::SUCCESS);
         }
+        if(session()->has($this->prefix . self::WARNING)) {
+            $this->message .= ' WARNING - ' . session()->get($this->prefix . self::WARNING);
+        }
+        if(session()->has($this->prefix . self::ERROR)) {
+            $this->message .= ' ERROR -  ' . session()->get($this->prefix . self::ERROR);
+        }
+        if(session()->has($this->prefix . self::INFO)) {
+            $this->message .= ' INFO - ' . session()->get($this->prefix . self::INFO);
+        }
+        return $this->message;
     }
 
 }

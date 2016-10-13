@@ -44,7 +44,7 @@
                                 {{$like->get('comment_' . $item->id)}}
                                 <a href="{!! route('comment.like', $item['id']) !!}" class="btn">
                                     LIKE
-                                    @if($item->likes->find(\Auth::user()->id))
+                                    @if($item->likes->first())
                                         good
                                     @else
                                         bad

@@ -65,8 +65,6 @@
                                                  document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
-
-
                                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
@@ -79,5 +77,5 @@
     </div>
 </nav>
 <div class="container">
-<p class="alert-warning">ERROR - {!!\App\Components\Message::hasMessage('success')!!}</p>
+<p class="alert-warning" style="color: red">{!!\App\Facades\Message::hasMessage()!!}</p>
 </div>
