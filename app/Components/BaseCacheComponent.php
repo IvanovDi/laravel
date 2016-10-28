@@ -2,24 +2,40 @@
 
 namespace App\Components;
 
+
+
+use Carbon\Carbon;
+
 abstract class BaseCacheComponent
 {
-    protected $cacheName = '';
+    protected $item;
 
-    public function get()
+    public function get($item)
     {
+        $res = '';
+        $this->item = $item;
         if (!$this->hasCache()) {
             $data = $this->putCache();
         } else {
             $data = $this->getCache();
         }
+        foreach ($data as $key => $value) {
+            if($key === $this->item) {
+                $res = $value;
+            }
+        }
 
-        return $data;
+        return $res;
     }
 
-    protected function getCacheLifeTime()
+    protected function getNameItem()
     {
-        return time() + 60*60*24*30;
+        return $this->item;
+    }
+
+    protected function getTime()
+    {
+        return Carbon::now()->addHours(1);
     }
 
     protected function getCacheObject()
@@ -29,31 +45,26 @@ abstract class BaseCacheComponent
 
     protected function hasCache()
     {
-        return $this->getCacheObject()->has($this->getCacheName());
+        return $this->getCacheObject()->has($this->getNameItem());
     }
 
     protected function putCache()
     {
         $data = $this->getDataForCache();
-        $this->getCacheObject()->put($this->getCacheName(), $data, $this->getCacheLifeTime());
+        $this->getCacheObject()->put('likes', $data, $this->getTime());
 
         return $data;
     }
 
     protected function getCache()
     {
-        return $this->getCacheObject()->get($this->getCacheName());
+        return $this->getCacheObject()->get($this->getNameItem());
     }
 
-    protected function getCacheName()
-    {
-        return $this->cacheName;
-    }
-
-    public function destroyCache()
+    public function deleteCache($item)
     {
         if ($this->hasCache()) {
-            $this->getCacheObject()->forget($this->getCacheName());
+            $this->getCacheObject()->forget($item);
         }
     }
 

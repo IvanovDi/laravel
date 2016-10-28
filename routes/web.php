@@ -15,31 +15,17 @@ Auth::routes();
 Route::group(['middleware' => ['auth', 'active.user']], function()
 {
 
-Route::get('/', 'PostController@index');
+Route::get('/', 'HomeController@index');
 
-Route::get('create', [
-    'as' => 'post.create',
-    'uses' => 'PostController@create'   //todo переписать Post route на resource
-]);
-
-Route::post('save', [
-    'as' => 'post.save',
-    'uses' => 'PostController@save'
-]);
-
-Route::get('showPost/{id}', [
-    'as' => 'post.show',
-    'uses' => 'PostController@showPost'
+Route::resource('post', 'PostController', [
+    'except' => [
+        'index', 'edit', 'update'
+    ]
 ]);
 
 Route::get('saveComment/{id}', [
     'as' => 'comment.save',
     'uses' => 'CommentController@saveComment'
-]);
-
-Route::get('deletePost/{id}', [
-    'as' => 'post.delete',
-    'uses' => 'PostController@deletePost'
 ]);
 
 Route::get('likeComment/{id}', [
@@ -87,6 +73,4 @@ Route::post('reship', [
     'as' => 'reship',
     'uses' => 'ActiveController@reship'
 ]);
-
-
 

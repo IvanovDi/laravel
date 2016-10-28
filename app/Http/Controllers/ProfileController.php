@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Notifications\SendMail;
 use App\Notifications\SendMessage;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller

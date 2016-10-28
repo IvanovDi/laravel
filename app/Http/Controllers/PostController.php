@@ -9,6 +9,7 @@ use Auth;
 use App\Repositories\PostRepository;
 use App\Repositories\Criteries\OrderCommentBy;
 use App\Repositories\CommentRepository;
+use App\Facades\Message;
 
 class PostController extends Controller
 {
@@ -24,23 +25,17 @@ class PostController extends Controller
         $this->path = 'def_img.jpg';
     }
 
-    public function index()
-    {
-        $post = $this->postRepository->pushCriteria(new OrderCommentBy())->paginate(3);
-
-        return view('post.index', ['post' => $post]);
-
-    }
-
     public function create()
     {
         return view('post.createPost');
     }
 
-    public function save(Request $request)//todo store
+    public function store(Request $request)
     {
-        //todo validate
-//        $this->validate();
+        $this->validate($request, [
+            'title' => 'required|max:30',
+            'description' => 'required'
+        ]);
         if ($request->hasFile('image')) {
             $fileContent = file_get_contents($request->file('image')->getRealPath());
             $fileName = $request->file('image')->getClientOriginalName();
@@ -49,7 +44,7 @@ class PostController extends Controller
         }
 
         $this->postRepository->create([
-            'user_id' => Auth::user()->id,
+            'user_id' => \Auth::user()->id,
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'image' => $this->path
@@ -57,25 +52,19 @@ class PostController extends Controller
         return redirect('/');
     }
 
-    public function showPost($id)
+    public function show($id)
     {
-//        dd(new  Like());
+        Message::setSuccess('litle bug');
+        $like = new  Like();
         $post = $this->postRepository->find($id);
         $comment = $post->comments()->withCount('likes')->orderBy('created_at', 'DESC')->with('likes')->paginate(2);
-        return view('post.post', ['post' => $post, 'comments' => $comment]);
+        return view('post.post', ['post' => $post, 'comments' => $comment, 'like' => $like]);
     }
 
-    public function deletePost($id)
+    public function destroy($id)
     {
         $this->postRepository->delete($id);
         return redirect('/');
-    }
-
-    public function likeComment($id)
-    {
-        $comment = $this->commentRepository->find($id);
-        $comment->likes()->toggle(\Auth::user()->id);
-        return redirect()->back();
     }
 
 

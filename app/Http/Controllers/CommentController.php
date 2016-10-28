@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Components\Like;
+use App\Notifications\InfoOfNewComment;
 use  Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Repositories\CommentRepository;
+use Carbon\Carbon;
 
 class CommentController extends Controller
 {
@@ -17,33 +19,41 @@ class CommentController extends Controller
         $this->commentRepository = $comment;
     }
 
-    public function editComment(Request $request, $id)  //todo переименовать на update. Сделать проверку на время
+    public function editComment(Request $request, $id)
     {
-        $comment  = $this->commentRepository->find($id);
-        $comment->description = $request->get('description');
-        $comment->edit = 1;
-        $comment->save();
+        if(Carbon::now() < Carbon::parse($this->commentRepository->find($id)->created_at)->addMinutes(10)) {
+            $comment  = $this->commentRepository->find($id);
+            $comment->description = $request->get('description');
+            $comment->edit = 1;
+            $comment->save();
+        }
         return redirect()->back();
+
     }
 
-    public function saveComment(Request $request, $post_id) //todo переименовать на store
+    public function saveComment(Request $request, $post_id)
     {
         $this->validate($request, [
             'description' => 'required'
         ]);
+        $user = Auth::user();
         Comment::create([
             'description' => $request->get('description'),
-            'user_id' => Auth::user()->id,
+            'user_id' => $user->id,
             'post_id' => $post_id,
             'edit' => 0
         ]);
+        $user->notify(new InfoOfNewComment());
         return redirect()->back();
     }
 
     public function likeComment($id)
     {
-        $comment = Comment::find($id);
+        $like = new Like();
+        $like->deleteCache($id);
+        $comment = $this->commentRepository->find($id);
         $comment->likes()->toggle(\Auth::user()->id);
         return redirect()->back();
     }
+
 }

@@ -5,11 +5,18 @@
         <img src="{!! '../images/' . $post->image !!}" alt="picture">
         <p>{{$post->description}}</p>
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
+        <div style="border: solid 1px black; text-align: center;">
+            <h3>Notification</h3>
+            @foreach ($post->user->notifications as $notification)
+                {{$notification->data['user']}}
+                {{$notification->created_at}} <br>
+            @endforeach
+        </div>
         <div class="form-group">
             <div class="panel-heading" >
                 {!! Form::open(['route' => ['comment.save', $post->id], 'method' => 'get']) !!}
-                    <textarea name="description" rows="2" class="form-control"></textarea>
-                    {!! Form::submit('Add Comment') !!}
+                <textarea name="description" rows="2" class="form-control"></textarea>
+                {!! Form::submit('Add Comment') !!}
                 {!!Form::close()!!}
                 <p style="color: red">{!! $errors->first('description') !!}</p>
             </div>
@@ -33,7 +40,7 @@
                                     {!! Form::close() !!}
                                     @endif
                                     @if($item->edit === 1)
-                                        COMMENT EDIT!!!
+                                        COMMENT EDITED!!!
                                     @endif
                                 </div>
                             </div>
@@ -41,10 +48,10 @@
                         <div class="panel-body">
                             <p>{!! $item['text'] !!}</p>
                             <div style="text-align: right">
-                                {{$item->likes_count}}
+                                {{$like->get('comment_' . $item->id)}}
                                 <a href="{!! route('comment.like', $item['id']) !!}" class="btn">
                                     LIKE
-                                    @if($item->likes->find(\Auth::user()->id))    {{--todo нельзя отправлять запрос с вьюхи --}}
+                                    @if($item->likes->first())
                                         good
                                     @else
                                         bad
