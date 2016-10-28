@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 use App\Repositories\PostRepository;
 use App\Repositories\Criteries\OrderCommentBy;
 use App\Repositories\CommentRepository;
