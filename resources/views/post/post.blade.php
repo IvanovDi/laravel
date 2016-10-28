@@ -5,11 +5,18 @@
         <img src="{!! '../images/' . $post->image !!}" alt="picture">
         <p>{{$post->description}}</p>
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
+        <div style="border: solid 1px black; text-align: center;">
+            <h3>Notification</h3>
+            @foreach ($post->user->notifications as $notification)
+                {{$notification->data['user']}}
+                {{$notification->created_at}} <br>
+            @endforeach
+        </div>
         <div class="form-group">
             <div class="panel-heading" >
                 {!! Form::open(['route' => ['comment.save', $post->id], 'method' => 'get']) !!}
-                    <textarea name="description" rows="2" class="form-control"></textarea>
-                    {!! Form::submit('Add Comment') !!}
+                <textarea name="description" rows="2" class="form-control"></textarea>
+                {!! Form::submit('Add Comment') !!}
                 {!!Form::close()!!}
                 <p style="color: red">{!! $errors->first('description') !!}</p>
             </div>

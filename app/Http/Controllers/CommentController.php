@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Components\Like;
+use App\Notifications\InfoOfNewComment;
 use  Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Repositories\CommentRepository;
@@ -35,12 +36,14 @@ class CommentController extends Controller
         $this->validate($request, [
             'description' => 'required'
         ]);
+        $user = Auth::user();
         Comment::create([
             'description' => $request->get('description'),
-            'user_id' => Auth::user()->id,
+            'user_id' => $user->id,
             'post_id' => $post_id,
             'edit' => 0
         ]);
+        $user->notify(new InfoOfNewComment());
         return redirect()->back();
     }
 
