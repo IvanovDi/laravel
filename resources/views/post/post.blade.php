@@ -7,9 +7,14 @@
         <p>{{" create - $post->created_at  update - $post->updated_at"}}</p>
         <div style="border: solid 1px black; text-align: center;">
             <h3>Notification</h3>
-            @foreach ($post->user->notifications as $notification)
+                @foreach ($post->user->unreadNotifications as $notification)
+                @if(Auth::user()->name === $notification->data['user'])
                 {{$notification->data['user']}}
-                {{$notification->created_at}} <br>
+                    {{$notification->created_at}} <br>
+                    @if(Auth::user()->email === $post->user->email)
+                        {{$notification->markAsRead()}}
+                    @endif
+                @endif
             @endforeach
         </div>
         <div class="form-group">

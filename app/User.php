@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'token', 'token_time'
+        'name', 'email', 'password', 'status', 'token', 'token_time', 'facebook_id'
     ];
 
     /**
@@ -42,6 +42,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
-
 
 }

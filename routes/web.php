@@ -74,3 +74,10 @@ Route::post('reship', [
     'uses' => 'ActiveController@reship'
 ]);
 
+
+
+
+
+Route::get('auth/facebook', 'Auth\RegisterController@redirectToProvider');
+
+Route::get('auth/facebook/callback', 'Auth\RegisterController@handleProviderCallback');

@@ -8,6 +8,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Notifications\SendMail;
+use Socialite;
 
 class RegisterController extends Controller
 {
@@ -76,5 +77,37 @@ class RegisterController extends Controller
         $user->notify(new SendMail($this->token));
 
         return $user;
+    }
+
+
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+
+    public function handleProviderCallback()
+    {
+        try
+        {
+            $socialUser = Socialite::driver('facebook')->user();
+        }
+        catch (\Exception $e)
+        {
+            return redirect('/');
+        }
+
+        $user = User::where('facebook_id', $socialUser->getId)->first();
+        if(!$user) {
+                User::create([
+                    'facebook_id' => $socialUser->getId(),
+                    'name' => $socialUser->getName(),
+                    'email' => $socialUser->getEmail(),
+                ]);
+        }
+        auth()->login($user);
+
+        return  redirect()->to('/');
+
     }
 }

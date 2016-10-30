@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '518674788332808',
+        'client_secret' => '4ccef165b070f25ad74f805f6e42863d',
+        'redirect' => 'https://laravel.loc/auth/facebook/callback',
+    ],
+
 ];
